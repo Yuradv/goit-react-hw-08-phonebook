@@ -1,16 +1,19 @@
-import  { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteContacts, saveContacts, filterContacts } from "redux/contactsSlice";
+import { getContacts, getFilter } from 'redux/contactsSlice';
 import Form from "./Form";
 import Contacts from "./Contacts";
 import Filter from "./Filter";
 import Container from "./Container";
 import shortid from 'shortid';
 import Notiflix from 'notiflix';
-import useLocalStorage from "hooks/useLocalStorage";
+
 
 
 export default function App()  {
-  const [contacts, setContacts] = useLocalStorage('contacts', [])
-  const [filter, setFilter] = useState('')
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
   
   const saveContact = ( name, number) => {
     const contactData = {
@@ -22,12 +25,12 @@ export default function App()  {
       if (contacts.find((contactData) => contactData.name.toLowerCase() === name.toLowerCase())) {
       Notiflix.Notify.failure(`${name} is already in contacts`);
     } else {
-      setContacts((contacts) => [contactData, ...contacts])
+      dispatch(saveContacts(contactData));
       }
     }
 
   const onChangeFilter = (event) => {
-    setFilter(event.currentTarget.value);
+    dispatch(filterContacts(event.currentTarget.value));
   };
 
   const getVisibleContacts = () => {
@@ -39,7 +42,7 @@ export default function App()  {
   }
 
   const deleteContact = (contactId) => {
-    setContacts(contacts.filter((contact) => contact.id !== contactId))
+    dispatch(deleteContacts(contactId));
   };
 
     return (

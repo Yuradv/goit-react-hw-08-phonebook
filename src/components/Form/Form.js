@@ -23,7 +23,7 @@ export default function Form({ onSubmit }) {
 
   const handleSubmit = event => {
     event.preventDefault();
-
+    
     onSubmit(name, number);
     reset();
   };
