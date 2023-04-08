@@ -1,30 +1,17 @@
-import { useAddContactMutation } from 'redux/contacts/contactsApi';
-import { useSelector } from 'react-redux';
-import { selectContacts } from 'redux/contacts/contactsSelectors';
+import {
+  useAddContactMutation,
+  useFetchContactsQuery,
+} from 'redux/contacts/contactsApi';
 import { useState } from 'react';
 import Notiflix from 'notiflix';
-// import shortid from 'shortid';
 import s from './Form.module.css';
 
 export default function Form() {
   const [addContact] = useAddContactMutation();
+  const { data } = useFetchContactsQuery();
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(selectContacts);
-
-  // const saveContact = (name, phone) => {
-  //   if (
-  //     contacts.find(
-  //       contact => contact.name.toLowerCase() === name.toLowerCase()
-  //     )
-  //   ) {
-  //     Notiflix.Notify.failure(`${name} is already in contacts`);
-  //   } else {
-  //     addContact(name,phone);
-  //     Notiflix.Notify.success(`${name} has been added to contacts!`);
-  //   }
-  // };
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -49,7 +36,7 @@ export default function Form() {
       number,
     };
 
-    if (contacts.find(contact => contact.name === name)) {
+    if (data.find(contact => contact.name === name)) {
       Notiflix.Notify.failure(`${name} is already in contacts`);
     } else {
       addContact(contact);

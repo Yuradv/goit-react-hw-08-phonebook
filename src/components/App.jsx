@@ -7,10 +7,8 @@ import Filter from './Filter';
 import Container from './Container';
 import { PulseLoader } from 'react-spinners';
 
-
-
 export default function App() {
-  const { data, isFetching} = useFetchContactsQuery();
+  const { data, isFetching } = useFetchContactsQuery();
   const contacts = data;
   const filter = useSelector(selectFilter);
 
