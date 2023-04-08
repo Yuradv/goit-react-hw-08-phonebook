@@ -1,19 +1,23 @@
+import { useDeleteContactMutation } from 'redux/contacts/contactsApi';
+import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
 import s from './Contacts.module.css';
 
-function Contacts({ contacts, onDeleteContact }) {
+function Contacts({ contacts }) {
+  const [deleteContact] = useDeleteContactMutation();
+ 
+
   return (
     <ul className={s.list}>
       {contacts.map(contact => {
         return (
           <li key={contact.id} className={s.item}>
-            <p>
-              {contact.name}: {contact.number}
-            </p>
+            <p style={{ fontWeight: '700', width: '200px' }}>{contact.name}:</p>
+            <p style={{ width: '200px' }}>{contact.phone}</p>
             <button
               className={s.button}
               type="button"
-              onClick={() => onDeleteContact(contact.id)}
+              onClick={() => deleteContact(contact.id)}
             >
               Delete
             </button>
@@ -26,7 +30,6 @@ function Contacts({ contacts, onDeleteContact }) {
 
 Contacts.propTypes = {
   contacts: PropTypes.array.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
 };
 
 export default Contacts;

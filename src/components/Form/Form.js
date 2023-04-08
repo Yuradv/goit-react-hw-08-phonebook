@@ -1,10 +1,30 @@
-import PropTypes from 'prop-types';
+import { useAddContactMutation } from 'redux/contacts/contactsApi';
+import { useSelector } from 'react-redux';
+import { selectContacts } from 'redux/contacts/contactsSelectors';
 import { useState } from 'react';
+import Notiflix from 'notiflix';
+import shortid from 'shortid';
 import s from './Form.module.css';
 
-export default function Form({ onSubmit }) {
+export default function Form() {
+  const [addContact] = useAddContactMutation();
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(selectContacts);
+
+  // const saveContact = (name, phone) => {
+  //   if (
+  //     contacts.find(
+  //       contact => contact.name.toLowerCase() === name.toLowerCase()
+  //     )
+  //   ) {
+  //     Notiflix.Notify.failure(`${name} is already in contacts`);
+  //   } else {
+  //     addContact(name,phone);
+  //     Notiflix.Notify.success(`${name} has been added to contacts!`);
+  //   }
+  // };
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -21,10 +41,21 @@ export default function Form({ onSubmit }) {
     }
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault();
 
-    onSubmit(name, number);
+    const contact = {
+      name,
+      number,
+    };
+
+    if (contacts.find(contact => contact.name === name)) {
+      Notiflix.Notify.failure(`${name} is already in contacts`);
+    } else {
+      addContact(contact);
+      Notiflix.Notify.success(`${name} has been added to contacts!`);
+    }
+
     reset();
   };
 
@@ -69,7 +100,3 @@ export default function Form({ onSubmit }) {
     </form>
   );
 }
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
