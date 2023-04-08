@@ -1,5 +1,4 @@
 import { useDeleteContactMutation } from 'redux/contacts/contactsApi';
-import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
 import s from './Contacts.module.css';
 

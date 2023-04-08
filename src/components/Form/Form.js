@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectContacts } from 'redux/contacts/contactsSelectors';
 import { useState } from 'react';
 import Notiflix from 'notiflix';
-import shortid from 'shortid';
+// import shortid from 'shortid';
 import s from './Form.module.css';
 
 export default function Form() {
