@@ -1,10 +1,13 @@
-import { useDeleteContactMutation } from 'redux/contacts/contactsApi';
+// import { useDeleteContactMutation } from 'redux/contacts/contactsApi';
+import { deleteContact } from 'redux/contacts/contactsApi';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import Notiflix from 'notiflix';
 import s from './Contacts.module.css';
 
-
 function Contacts({ contacts }) {
-  const [deleteContact] = useDeleteContactMutation();
+  // const [deleteContact] = useDeleteContactMutation();
+  const dispatch = useDispatch();
 
   return (
     <ul className={s.list}>
@@ -16,7 +19,12 @@ function Contacts({ contacts }) {
             <button
               className={s.button}
               type="button"
-              onClick={() => deleteContact(contact.id) }
+              onClick={() =>
+                dispatch(
+                  deleteContact(contact.id),
+                  Notiflix.Notify.info(`${contact.name} has been deleted`)
+                )
+              }
             >
               Delete
             </button>
