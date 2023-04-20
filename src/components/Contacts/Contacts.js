@@ -1,42 +1,54 @@
-// import { useDeleteContactMutation } from 'redux/contacts/contactsApi';
-import { deleteContact } from 'redux/contacts/contactsApi';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import Notiflix from 'notiflix';
-import s from './Contacts.module.css';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectContacts,
+  selectFilter,
+  selectIsLoading,
+} from 'redux/contacts/contactsSelectors';
+import { useEffect } from 'react';
+import Form from 'components/Form';
+import ContactsList from 'components/ContactsList';
+import Filter from 'components/Filter';
+import Container from 'components/Container';
+import { fetchContacts } from 'redux/contacts/contactsApi';
+import { PulseLoader } from 'react-spinners';
 
-function Contacts({ contacts }) {
-  // const [deleteContact] = useDeleteContactMutation();
+export default function Contacts() {
   const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
+  const isLoading = useSelector(selectIsLoading);
+
+  const getVisibleContacts = () => {
+    const normalizedfilter = filter.toLowerCase();
+
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedfilter)
+    );
+  };
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
-    <ul className={s.list}>
-      {contacts.map(contact => {
-        return (
-          <li key={contact.id} className={s.item}>
-            <p style={{ fontWeight: '700', width: '200px' }}>{contact.name}:</p>
-            <p style={{ width: '200px' }}>{contact.number}</p>
-            <button
-              className={s.button}
-              type="button"
-              onClick={() =>
-                dispatch(
-                  deleteContact(contact.id),
-                  Notiflix.Notify.info(`${contact.name} has been deleted`)
-                )
-              }
-            >
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <Container>
+      <Form />
+      <hr />
+
+      <Filter value={filter} />
+      {isLoading && <PulseLoader color="#ed9121" size={30} />}
+      {contacts.length === 0 && (
+        <h2
+          style={{
+            marginTop: '50px',
+            color: '#ed9121',
+            textDecoration: 'underline',
+          }}
+        >
+          There are no contacts
+        </h2>
+      )}
+      <ContactsList contacts={getVisibleContacts()} />
+    </Container>
   );
 }
-
-Contacts.propTypes = {
-  contacts: PropTypes.array.isRequired,
-};
-
-export default Contacts;

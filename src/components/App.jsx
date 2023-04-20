@@ -1,60 +1,58 @@
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  selectContacts,
-  selectFilter,
-  selectIsLoading,
-} from 'redux/contacts/contactsSelectors';
 import { useEffect } from 'react';
-// import { useFetchContactsQuery } from 'redux/contacts/contactsApi';
-
-import Form from './Form';
-import Contacts from './Contacts';
-import Filter from './Filter';
+import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
 import Container from './Container';
-import { fetchContacts } from 'redux/contacts/contactsApi';
-import { PulseLoader } from 'react-spinners';
+import Contacts from './Contacts/Contacts';
+import HomeView from './Views/HomeView';
+import { Layout } from './Layout';
+import { useAuth } from 'hooks/useAuth';
+import { refreshUser } from 'redux/auth/authOperations';
+import { LoginView } from './Views/LoginView';
+import { RegisterView } from './Views/RegisterView';
+import { RestrictedRoute } from './Routes/RestrictedRoute';
+import { PrivateRoute } from './Routes/PrivateRoute';
 
 export default function App() {
-  // const { data, isFetching } = useFetchContactsQuery();
-  // const contacts = data;
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectFilter);
-  const isLoading = useSelector(selectIsLoading);
-
-  const getVisibleContacts = () => {
-    const normalizedfilter = filter.toLowerCase();
-
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedfilter)
-    );
-  };
+  const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return (
-    <Container>
-      <h1>Phonebook</h1>
-      <Form />
-      <hr />
-
-      <h2>Contacts</h2>
-      <Filter value={filter} />
-      {isLoading && <PulseLoader color="#ed9121" size={30} />}
-      {contacts.length === 0 && (
-        <h2
-          style={{
-            marginTop: '50px',
-            color: '#ed9121',
-            textDecoration: 'underline',
-          }}
-        >
-          There are no contacts
-        </h2>
-      )}
-      <Contacts contacts={getVisibleContacts()} />
-    </Container>
+    !isRefreshing && (
+      <Container>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomeView />} />
+            <Route
+              path="/login"
+              element={
+                <RestrictedRoute
+                  redirectTo="/contacts"
+                  component={<LoginView />}
+                />
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <RestrictedRoute
+                  redirectTo="/contacts"
+                  component={<RegisterView />}
+                />
+              }
+            />
+            <Route
+              path="/contacts"
+              element={
+                <PrivateRoute redirectTo="/login" component={<Contacts />} />
+              }
+            />
+          </Route>
+        </Routes>
+      </Container>
+    )
   );
 }
