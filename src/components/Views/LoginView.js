@@ -20,14 +20,14 @@ export const LoginView = () => {
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <label>
-        Email
-        <input type="email" name="email" />
+        E-mail
+        <input type="email" name="email" placeholder="example@domain.com" />
       </label>
       <label>
         Password
-        <input type="password" name="password" />
+        <input type="password" name="password" placeholder="*****" />
       </label>
-      <button type="submit">Log In</button>
+      <button type="submit">Sign in</button>
     </form>
   );
 };

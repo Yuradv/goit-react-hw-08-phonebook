@@ -20,18 +20,18 @@ export const RegisterView = () => {
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <label>
-        Username
-        <input type="text" name="name" />
+        Name
+        <input type="text" name="name" placeholder='enter'/>
       </label>
       <label>
-        Email
-        <input type="email" name="email" />
+        E-mail
+        <input type="email" name="email" placeholder='example@domain.com'/>
       </label>
       <label>
         Password
-        <input type="password" name="password" />
+        <input type="password" name="password" placeholder='*****'/>
       </label>
-      <button type="submit">Register</button>
+      <button type="submit">Sign up</button>
     </form>
   );
 };

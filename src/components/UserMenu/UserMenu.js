@@ -24,7 +24,7 @@ export default function UserMenu() {
   return (
     <div>
       <img alt="" width="32" />
-      <span>Welcome, {user.name}</span>
+      <span>Welcome, {user.email}</span>
       <button type="button" onClick={() => dispatch(logOut())}>
         Logout
       </button>
