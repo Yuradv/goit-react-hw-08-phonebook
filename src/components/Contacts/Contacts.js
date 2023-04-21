@@ -36,12 +36,12 @@ export default function Contacts() {
       <hr />
 
       <Filter value={filter} />
-      {isLoading && <PulseLoader color="#ed9121" size={30} />}
+      {isLoading && <PulseLoader color="#1976d2" size={30} />}
       {contacts.length === 0 && (
         <h2
           style={{
             marginTop: '50px',
-            color: '#ed9121',
+            color: '#1976d2',
             textDecoration: 'underline',
           }}
         >

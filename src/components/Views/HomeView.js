@@ -2,6 +2,7 @@ import React from 'react';
 
 const styles = {
   container: {
+    marginTop: '50px',
     minHeight: 'calc(100vh - 50 px)',
     display: 'flex',
     allignItems: 'center',
@@ -11,6 +12,7 @@ const styles = {
     fontWeight: 500,
     fontSize: 48,
     textAllign: 'center',
+    color: '#1976d2',
   },
 };
 

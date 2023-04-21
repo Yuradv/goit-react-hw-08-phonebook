@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { filterContacts } from 'redux/contacts/contactsSlice';
 import PropTypes from 'prop-types';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import s from './Filter.module.css';
 
 function Filter({ filter }) {

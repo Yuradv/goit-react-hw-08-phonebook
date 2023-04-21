@@ -7,10 +7,13 @@ import HomeView from './Views/HomeView';
 import { Layout } from './Layout';
 import { useAuth } from 'hooks/useAuth';
 import { refreshUser } from 'redux/auth/authOperations';
-import { LoginView } from './Views/LoginView';
-import { RegisterView } from './Views/RegisterView';
+import  RegisterView  from './Views/RegisterView';
+import  LoginView  from './Views/LoginView';
 import { RestrictedRoute } from './RestrictedRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { PulseLoader } from 'react-spinners';
+
+
 
 
 export default function App() {
@@ -22,38 +25,38 @@ export default function App() {
   }, [dispatch]);
 
   return (
-    !isRefreshing && (
-        <Container>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomeView />} />
-              <Route
-                path="/login"
-                element={
-                  <RestrictedRoute
-                    redirectTo="/contacts"
-                    component={<LoginView />}
-                  />
-                }
-              />
-              <Route
-                path="/register"
-                element={
-                  <RestrictedRoute
-                    redirectTo="/contacts"
-                    component={<RegisterView />}
-                  />
-                }
-              />
-              <Route
-                path="/contacts"
-                element={
-                  <PrivateRoute redirectTo="/login" component={<Contacts />} />
-                }
-              />
-            </Route>
-          </Routes>
-        </Container>
-    )
+    <Container>
+      {isRefreshing ? <PulseLoader/> : (
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomeView />} />
+            <Route
+              path="/login"
+              element={
+                <RestrictedRoute
+                  redirectTo="/contacts"
+                  component={<LoginView />}
+                />
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <RestrictedRoute
+                  redirectTo="/contacts"
+                  component={<RegisterView />}
+                />
+              }
+            />
+            <Route
+              path="/contacts"
+              element={
+                <PrivateRoute redirectTo="/login" component={<Contacts />} />
+              }
+            />
+          </Route>
+        </Routes>
+      )}
+    </Container>
   );
 }

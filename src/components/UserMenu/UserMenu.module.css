@@ -1,0 +1,37 @@
+.container {
+  display: 'flex';
+  align-items: 'center';
+  justify-content: center;
+  text-align: center;
+
+}
+
+
+.name {
+  font-weight: 700;
+  margin-right: 12;
+}
+
+.button {
+    margin-left: 50px;
+}
+
+.button {
+    display: inline-block;
+    margin-right: 40px;
+    padding: 10px;
+
+    font-size: 20px;
+    color: white;
+    background-color: #1976d2;
+    text-decoration: none;
+    border: 1px solid grey;
+    border-radius: 5px;
+    cursor: pointer;
+
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+.button:hover {
+    background-color: #145ea8;
+}

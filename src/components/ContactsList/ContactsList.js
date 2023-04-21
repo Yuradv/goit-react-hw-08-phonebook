@@ -1,4 +1,3 @@
-// import { useDeleteContactMutation } from 'redux/contacts/contactsApi';
 import { deleteContact } from 'redux/contacts/contactsApi';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -6,7 +5,6 @@ import Notiflix from 'notiflix';
 import s from './Contacts.module.css';
 
 function ContactsList({ contacts }) {
-  // const [deleteContact] = useDeleteContactMutation();
   const dispatch = useDispatch();
 
   return (

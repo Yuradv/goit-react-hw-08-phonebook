@@ -2,10 +2,11 @@
     display: inline-block;
     margin-right: 40px;
     padding: 10px;
+    width: 100px;
 
     font-size: 20px;
-    color: #212121;
-    background-color: #f5f4fa;
+    color: white;
+    background-color: #1976d2;
     text-decoration: none;
     border: 1px solid grey;
     border-radius: 5px;
@@ -14,5 +15,5 @@
 }
 
 .NavLink:hover {
-    background-color: #ffa812;
+    background-color: #145ea8;
 }

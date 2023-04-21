@@ -38,8 +38,7 @@ export default function Form() {
     if (contacts.find(contact => contact.name === name)) {
       Notiflix.Notify.failure(`${name} is already in contacts`);
     } else {
-      dispatch(addContact(contact))
-      // addContact(contact);
+      dispatch(addContact(contact));
       Notiflix.Notify.success(`${name} has been added to contacts!`);
     }
 
@@ -66,6 +65,7 @@ export default function Form() {
             required
             value={name}
             onChange={handleChange}
+            placeholder={name}
           />
         </label>
 
